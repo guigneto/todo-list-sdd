@@ -1,11 +1,11 @@
 <!-- 
 SYNC IMPACT REPORT
 ==================
-Version Change: 1.0.0 → 1.1.0 (MINOR: architectural guidelines added)
+Version Change: 1.1.0 → 1.2.0 (MINOR: Portuguese-Brazilian language requirement added)
 Modified Principles: None
-Added Sections: Architecture (MVC pattern, Mono-repo structure, memory-only storage)
+Added Sections: Localization (Portuguese-Brazilian mandate)
 Removed Sections: None
-Templates Updated: plan-template.md, tasks-template.md (architecture context)
+Templates Updated: spec-template.md, plan-template.md (localization context)
 Follow-up TODOs: None
 -->
 
@@ -94,6 +94,22 @@ User-facing and developer documentation centralized in MKDOCS.
 - Free tier hosting sufficient (single instance, low resource usage)
 - No need for database backups or migration tooling
 
+## Localization
+
+**Language**: Portuguese-Brazilian (pt-BR) - mandatory requirement
+- **UI/Frontend**: All user-facing text, labels, buttons, and messages in Portuguese-Brazilian
+- **Backend**: All API responses, error messages, and validation messages in Portuguese-Brazilian
+- **Documentation**: All code comments, docstrings, and internal documentation in Portuguese-Brazilian
+- **Database/Data**: Locale-aware formatting for dates, times, numbers, and currency
+- **Git Commits**: Commit messages and PR descriptions in Portuguese-Brazilian
+
+**Implementation Requirements**:
+- Use standard pt-BR locale codes (`pt_BR`, `pt-BR`) for system configuration
+- Implement localization from the start; no English fallbacks in production
+- Use language-aware string formatting for pluralization and gender agreements
+- All user input validation messages in Portuguese-Brazilian
+- Support for Brazilian Portuguese character encoding (UTF-8)
+
 ## Development Workflow
 
 1. **Issue Creation**: All work starts with a GitHub issue describing the feature/bug
@@ -121,4 +137,4 @@ User-facing and developer documentation centralized in MKDOCS.
 **Review Cycle**: Constitution reviewed quarterly or when significant drift from principles is observed.  
 **Runtime Guidance**: Developers should consult `docs/CONTRIBUTING.md` for detailed implementation instructions and day-to-day practices.
 
-**Version**: 1.1.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
+**Version**: 1.2.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
