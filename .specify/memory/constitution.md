@@ -1,11 +1,11 @@
 <!-- 
 SYNC IMPACT REPORT
 ==================
-Version Change: N/A → 1.0.0 (initial ratification)
-Modified Principles: None (initial)
-Added Sections: Core Principles, Technology Stack, Development Workflow
+Version Change: 1.0.0 → 1.1.0 (MINOR: architectural guidelines added)
+Modified Principles: None
+Added Sections: Architecture (MVC pattern, Mono-repo structure, memory-only storage)
 Removed Sections: None
-Templates Updated: All dependent templates aligned with v1.0.0
+Templates Updated: plan-template.md, tasks-template.md (architecture context)
 Follow-up TODOs: None
 -->
 
@@ -68,6 +68,32 @@ User-facing and developer documentation centralized in MKDOCS.
 - **CI/CD**: GitHub Actions (or equivalent) for automated testing, linting, and deployment
 - **Version Control**: Git with GitHub
 
+## Architecture
+
+**Pattern**: MVC (Model-View-Controller) - mandatory architectural pattern
+- **Models**: Encapsulate data structures and business logic; must be independent of UI
+- **Views**: Presentation layer responsible for rendering UI; must not contain business logic
+- **Controllers**: Handle user input and orchestrate between Models and Views; thin request/response handlers
+
+**Repository Structure**: Mono-repo (single repository, organized by logical boundaries)
+- Single Git repository for all components
+- Organized by feature/module directories under `src/`
+- Shared utilities/libraries in `lib/` directory
+- Clear separation of concerns via directory structure
+
+**Data Storage**: Memory-only (in-process storage, no persistent database)
+- Use in-memory data structures (arrays, maps, sets, objects)
+- Data persists only during application runtime
+- Application restart clears all data (reset to empty state)
+- No file-based database, no external database connections required
+- Suitable for MVP, demos, and testing without infrastructure dependencies
+
+**Deployment Model**: Stateless single-instance
+- Application is stateless; all state held in memory
+- No session management across multiple instances
+- Free tier hosting sufficient (single instance, low resource usage)
+- No need for database backups or migration tooling
+
 ## Development Workflow
 
 1. **Issue Creation**: All work starts with a GitHub issue describing the feature/bug
@@ -95,4 +121,4 @@ User-facing and developer documentation centralized in MKDOCS.
 **Review Cycle**: Constitution reviewed quarterly or when significant drift from principles is observed.  
 **Runtime Guidance**: Developers should consult `docs/CONTRIBUTING.md` for detailed implementation instructions and day-to-day practices.
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
+**Version**: 1.1.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
