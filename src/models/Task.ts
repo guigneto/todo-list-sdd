@@ -1,4 +1,4 @@
-import type { Task, CreateTaskInput, UpdateTaskInput } from '../types/Task';
+import type { Task, CreateTaskInput } from '../types/Task';
 
 /**
  * Classe Task

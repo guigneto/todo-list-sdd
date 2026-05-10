@@ -69,7 +69,7 @@ export function estaNoFuturo(data: Date): boolean {
 /**
  * Obter diferença em dias entre duas datas
  */
-export function diferencemDias(data1: Date, data2: Date): number {
+export function diferenacaDias(data1: Date, data2: Date): number {
   const umDia = 24 * 60 * 60 * 1000;
   return Math.floor((data2.getTime() - data1.getTime()) / umDia);
 }

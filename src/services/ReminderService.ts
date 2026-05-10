@@ -9,7 +9,7 @@ import type { Reminder, CreateReminderInput } from '../types/Reminder';
 export class ReminderService {
   private storageService: StorageService;
   private readonly STORAGE_KEY = 'reminders';
-  private checkInterval: NodeJS.Timeout | null = null;
+  private checkInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
     this.storageService = new StorageService('todo-list');

@@ -37,7 +37,7 @@ export const MENSAGENS = {
   erros: {
     erroGenerico: 'Ocorreu um erro ao processar a solicitação',
     tarefaNaoEncontrada: 'Tarefa não encontrada',
-    lembr: 'Lembrete não encontrado',
+    lembreteNaoEncontrado: 'Lembrete não encontrado',
     storageNaoDisponivel: 'Armazenamento local não disponível',
     erroAoSalvar: 'Erro ao salvar dados',
     erroAoCarregar: 'Erro ao carregar dados',
@@ -59,7 +59,7 @@ export const MENSAGENS = {
     salvando: 'Salvando...',
     naoHaTarefas: 'Nenhuma tarefa criada ainda',
     buscarTarefas: 'Buscar tarefas...',
-    sem resultados: 'Nenhum resultado encontrado',
+    semResultados: 'Nenhum resultado encontrado',
     voltarAoInicio: 'Voltar ao início',
   },
 };
