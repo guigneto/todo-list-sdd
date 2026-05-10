@@ -24,14 +24,14 @@ description: "Tarefas de implementação para Gerenciamento de Tarefas com Lembr
 **Propósito**: Inicialização do projeto e estrutura base  
 **Dependências**: Nenhuma (começar aqui)
 
-- [ ] T001 Criar estrutura de diretórios per plan.md (src/, tests/, docs/, .github/workflows/)
-- [ ] T002 Inicializar package.json com dependencies (TypeScript, React, Vite, Jest, etc.)
-- [ ] T003 [P] Configurar tsconfig.json com configurações TypeScript strict
-- [ ] T004 [P] Configurar vite.config.ts para build e dev server
-- [ ] T005 [P] Configurar .eslintrc.json com regras de código limpo (pt-BR friendly)
-- [ ] T006 [P] Configurar prettier.config.js para formatação automática
-- [ ] T007 Criar .env.example com variáveis de ambiente necessárias
-- [ ] T008 [P] Criar arquivos de configuração CI/CD (.github/workflows/test.yml, deploy.yml)
+- [x] T001 Criar estrutura de diretórios per plan.md (src/, tests/, docs/, .github/workflows/)
+- [x] T002 Inicializar package.json com dependencies (TypeScript, React, Vite, Jest, etc.)
+- [x] T003 [P] Configurar tsconfig.json com configurações TypeScript strict
+- [x] T004 [P] Configurar vite.config.ts para build e dev server
+- [x] T005 [P] Configurar .eslintrc.json com regras de código limpo (pt-BR friendly)
+- [x] T006 [P] Configurar prettier.config.js para formatação automática
+- [x] T007 Criar .env.example com variáveis de ambiente necessárias
+- [x] T008 [P] Criar arquivos de configuração CI/CD (.github/workflows/test.yml, deploy.yml)
 
 **Checkpoint**: Projeto setup completo, dependências instaladas, tooling funcional
 
@@ -44,26 +44,26 @@ description: "Tarefas de implementação para Gerenciamento de Tarefas com Lembr
 
 ### Models (Entidades)
 
-- [ ] T009 [P] Criar interface de Type para Task em src/types/Task.ts (id, titulo, descricao, criada_em, concluida_em, status, lembrete)
-- [ ] T010 [P] Criar interface de Type para Reminder em src/types/Reminder.ts (id, tarefa_id, data_hora, foi_disparado, criado_em)
-- [ ] T011 [P] Criar classe Task em src/models/Task.ts com métodos de validação
-- [ ] T012 [P] Criar classe Reminder em src/models/Reminder.ts com métodos de validação
+- [x] T009 [P] Criar interface de Type para Task em src/types/Task.ts (id, titulo, descricao, criada_em, concluida_em, status, lembrete)
+- [x] T010 [P] Criar interface de Type para Reminder em src/types/Reminder.ts (id, tarefa_id, data_hora, foi_disparado, criado_em)
+- [x] T011 [P] Criar classe Task em src/models/Task.ts com métodos de validação
+- [x] T012 [P] Criar classe Reminder em src/models/Reminder.ts com métodos de validação
 
 ### Services (Lógica de Negócio)
 
-- [ ] T013 [P] Criar StorageService em src/services/StorageService.ts para gerenciar localStorage (get, set, remove, getAll)
-- [ ] T014 Criar TaskService em src/services/TaskService.ts com métodos (criarTarefa, deletarTarefa, listarTarefas, atualizarStatus) - depende T011, T013
-- [ ] T015 Criar ReminderService em src/services/ReminderService.ts com métodos (definirLembrete, removerLembrete, verificarLembretes) - depende T012, T013
-- [ ] T016 [P] Criar DateService em src/services/DateService.ts para formatação de datas em pt-BR
-- [ ] T017 [P] Criar ValidationService em src/services/ValidationService.ts para validações comuns
-- [ ] T018 [P] Criar NotificationService em src/services/NotificationService.ts para disparar notificações via Notification API ou toast
+- [x] T013 [P] Criar StorageService em src/services/StorageService.ts para gerenciar localStorage (get, set, remove, getAll)
+- [x] T014 Criar TaskService em src/services/TaskService.ts com métodos (criarTarefa, deletarTarefa, listarTarefas, atualizarStatus) - depende T011, T013
+- [x] T015 Criar ReminderService em src/services/ReminderService.ts com métodos (definirLembrete, removerLembrete, verificarLembretes) - depende T012, T013
+- [x] T016 [P] Criar DateService em src/services/DateService.ts para formatação de datas em pt-BR
+- [x] T017 [P] Criar ValidationService em src/services/ValidationService.ts para validações comuns
+- [x] T018 [P] Criar NotificationService em src/services/NotificationService.ts para disparar notificações via Notification API ou toast
 
 ### Constants & Utilities
 
-- [ ] T019 [P] Criar arquivo de mensagens em pt-BR em src/constants/messages.ts (erros, validações, confirmações)
-- [ ] T020 [P] Criar arquivo de configurações em src/constants/config.ts (limites, timeouts, defaults)
-- [ ] T021 [P] Criar utilitários de datas em src/utils/dateUtils.ts (parse, format, isInPast, etc.)
-- [ ] T022 [P] Criar utilitários de strings em src/utils/stringUtils.ts (trim, validate, etc.)
+- [x] T019 [P] Criar arquivo de mensagens em pt-BR em src/constants/messages.ts (erros, validações, confirmações)
+- [x] T020 [P] Criar arquivo de configurações em src/constants/config.ts (limites, timeouts, defaults)
+- [x] T021 [P] Criar utilitários de datas em src/utils/dateUtils.ts (parse, format, isInPast, etc.)
+- [x] T022 [P] Criar utilitários de strings em src/utils/stringUtils.ts (trim, validate, etc.)
 
 **Checkpoint**: Infraestrutura de modelos, serviços e utilidades completa - US1, US2, US3 podem começar em paralelo
 
