@@ -8,6 +8,5 @@
     "VITE_APP_ENV": "@vite_app_env",
     "VITE_NOTIFICATION_ENABLED": "@vite_notification_enabled",
     "VITE_STORAGE_PREFIX": "@vite_storage_prefix"
-  },
-  "envPrefix": "VITE_"
+  }
 }
