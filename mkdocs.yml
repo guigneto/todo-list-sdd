@@ -1,0 +1,78 @@
+site_name: TODO List - Gerenciador de Tarefas
+site_description: Aplicação web de gerenciamento de tarefas com lembretes, desenvolvida com SDD
+site_author: SDD Team
+site_url: https://seu-usuario.github.io/todo-list-sdd/
+repo_url: https://github.com/seu-usuario/todo-list-sdd
+repo_name: todo-list-sdd
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  locale: pt_BR
+  logo: assets/logo.svg
+  favicon: assets/favicon.ico
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - scheme: light
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: dark
+      primary: blue
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - attr_list
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      lang: pt
+  - minify:
+      minify_html: true
+
+nav:
+  - Home: index.md
+  - Início Rápido: quickstart.md
+  - Documentação:
+      - Arquitetura: documentation/architecture.md
+      - API: documentation/api.md
+      - Guia do Usuário: documentation/user-guide.md
+      - Configuração: documentation/configuration.md
+  - Desenvolvimento:
+      - Setup Local: development/setup.md
+      - Estrutura do Projeto: development/project-structure.md
+      - Testes: development/testing.md
+      - Contribuindo: development/contributing.md
+  - Deployment:
+      - GitHub Pages: deployment/github-pages.md
+      - Vercel: deployment/vercel.md
+      - Troubleshooting: deployment/troubleshooting.md
+  - FAQ: faq.md
+  - Changelog: changelog.md

@@ -15,7 +15,9 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "docs": "mkdocs serve",
+    "docs:build": "mkdocs build"
   },
   "dependencies": {
     "react": "^18.2.0",
