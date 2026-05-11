@@ -1,14 +1,13 @@
 site_name: TODO List - Gerenciador de Tarefas
 site_description: Aplicação web de gerenciamento de tarefas com lembretes, desenvolvida com SDD
 site_author: SDD Team
-site_url: https://seu-usuario.github.io/todo-list-sdd/
 repo_url: https://github.com/seu-usuario/todo-list-sdd
 repo_name: todo-list-sdd
 edit_uri: edit/main/docs/
 
 theme:
   name: material
-  locale: pt_BR
+  language: en
   logo: assets/logo.svg
   favicon: assets/favicon.ico
   features:
@@ -35,8 +34,8 @@ theme:
 
 markdown_extensions:
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       use_pygments: true
   - pymdownx.superfences
@@ -54,8 +53,6 @@ markdown_extensions:
 plugins:
   - search:
       lang: pt
-  - minify:
-      minify_html: true
 
 nav:
   - Home: index.md
@@ -63,13 +60,10 @@ nav:
   - Documentação:
       - Arquitetura: documentation/architecture.md
       - API: documentation/api.md
-      - Guia do Usuário: documentation/user-guide.md
-      - Configuração: documentation/configuration.md
   - Desenvolvimento:
       - Setup Local: development/setup.md
       - Estrutura do Projeto: development/project-structure.md
       - Testes: development/testing.md
-      - Contribuindo: development/contributing.md
   - Deployment:
       - GitHub Pages: deployment/github-pages.md
       - Vercel: deployment/vercel.md
