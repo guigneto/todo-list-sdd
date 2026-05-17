@@ -216,83 +216,103 @@ ReminderModel
 
 ## 🔄 Fluxo de Dados
 
-```
-Usuário (Browser UI)
-        ↓
-React Components (src/components/)
-        ↓
-Controllers (src/controllers/)
-        ↓
-Services (src/services/)
-        ↓
-Models (src/models/)
-        ↓
-localStorage (persistência)
+```mermaid
+flowchart TD
+    U["Usuário (Browser UI)"]
+    V["React Components<br/><code>src/components/</code>"]
+    C["Controllers<br/><code>src/controllers/</code>"]
+    S["Services<br/><code>src/services/</code>"]
+    M["Models<br/><code>src/models/</code>"]
+    DB[("localStorage<br/><i>persistência</i>")]
+
+    U --> V --> C --> S --> M --> DB
+
+    classDef user fill:#fee2e2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+    classDef layer fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+    classDef storage fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#312e81;
+    class U user;
+    class V,C,S,M layer;
+    class DB storage;
 ```
 
 ## 📦 Bundling
 
-Arquivos entram em build Vite:
+Pipeline de build com Vite:
 
-```
-src/**/*.(ts|tsx)
-        ↓
-TypeScript Compiler
-        ↓
-React JSX Transform
-        ↓
-Vite Bundle Optimizer
-        ↓
-dist/assets/index-*.js (158 KB)
-dist/assets/index-*.css (8.5 KB)
-dist/index.html
-```
+```mermaid
+flowchart LR
+    A["<code>src/**/*.(ts|tsx)</code>"] --> B[TypeScript Compiler]
+    B --> C[React JSX Transform]
+    C --> D[Vite Bundle Optimizer]
+    D --> E["<code>dist/assets/index-*.js</code><br/>(158 KB)"]
+    D --> F["<code>dist/assets/index-*.css</code><br/>(8.5 KB)"]
+    D --> G["<code>dist/index.html</code>"]
 
-**Saída:** ~50 KB gzipped, pronto para produção
-
-## 🧪 Teste Layers
-
-```
-Unit Tests (vitest)
-├── Models testing
-├── Services testing
-└── Utils testing
-
-Integration Tests (vitest)
-├── Service interactions
-└── Flow testing
-
-E2E Tests (Playwright)
-├── Full user workflows
-└── Browser automation
+    classDef src fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef tool fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+    classDef out fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    class A src;
+    class B,C,D tool;
+    class E,F,G out;
 ```
 
-## 📚 Documentação
+**Saída:** ~50 KB gzipped, pronto para produção.
 
-```
-mkdocs.yml (config)
-    ↓
-docs/**/*.md (markdown files)
-    ↓
-mkdocs build
-    ↓
-site/ (HTML estático)
-    ↓
-GitHub Pages deploy
+## 🧪 Camadas de Teste
+
+```mermaid
+flowchart TD
+    UT[Unit Tests<br/><i>vitest</i>]
+    UT --> UT1[Models testing]
+    UT --> UT2[Services testing]
+    UT --> UT3[Utils testing]
+
+    IT[Integration Tests<br/><i>vitest</i>]
+    IT --> IT1[Service interactions]
+    IT --> IT2[Flow testing]
+
+    E2E[E2E Tests<br/><i>Playwright</i>]
+    E2E --> E2E1[User workflows]
+    E2E --> E2E2[Browser automation]
+
+    classDef root fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+    classDef leaf fill:#f1f5f9,stroke:#475569,color:#0f172a;
+    class UT,IT,E2E root;
+    class UT1,UT2,UT3,IT1,IT2,E2E1,E2E2 leaf;
 ```
 
-## 🚀 Deployment
+## 📚 Pipeline de Documentação
 
+```mermaid
+flowchart LR
+    A["<code>mkdocs.yml</code><br/><i>config</i>"] --> C[mkdocs build]
+    B["<code>docs/**/*.md</code><br/><i>markdown</i>"] --> C
+    C --> D["<code>site/</code><br/><i>HTML estático</i>"]
+    D --> E[GitHub Pages]
+
+    classDef cfg fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef proc fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+    classDef out fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    class A,B cfg;
+    class C proc;
+    class D,E out;
 ```
-src/ + tests/
-    ↓
-npm run build
-    ↓
-dist/ (production ready)
-    ↓
-GitHub Pages / Vercel
-    ↓
-https://seu-usuario.github.io/todo-list-sdd
+
+## 🚀 Pipeline de Deploy
+
+```mermaid
+flowchart LR
+    A["<code>src/</code> + <code>tests/</code>"] --> B[npm run build]
+    B --> C["<code>dist/</code><br/><i>production ready</i>"]
+    C --> D[GitHub Pages]
+    C --> E[Vercel]
+
+    classDef src fill:#fef3c7,stroke:#d97706,color:#78350f;
+    classDef proc fill:#dbeafe,stroke:#2563eb,color:#1e3a8a;
+    classDef out fill:#dcfce7,stroke:#16a34a,color:#14532d;
+    class A src;
+    class B proc;
+    class C,D,E out;
 ```
 
 ## 🔐 Git Structure

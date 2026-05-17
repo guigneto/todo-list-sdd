@@ -65,88 +65,25 @@ Histórico de versões e mudanças da aplicação TODO List.
 - **Testes:** Suporte para unit + E2E tests
 - **Config:** TypeScript, ESLint, Prettier, Vite otimizado
 
-### 🚀 Roadmap Futuro
-
-#### [0.2.0] - Reminders
-- [ ] Sistema de lembretes com data/hora
-- [ ] Notificações de browser
-- [ ] Lembretes recorrentes
-
-#### [0.3.0] - Features Avançadas
-- [ ] Categorias/Tags de tarefas
-- [ ] Busca e filtros avançados
-- [ ] Subtarefas
-- [ ] Prioridades
-
-#### [0.4.0] - Backend & Sync
-- [ ] API Backend (Node.js/Express)
-- [ ] Autenticação (Email/OAuth)
-- [ ] Sincronização multi-device
-- [ ] Backup automático
-
-#### [1.0.0] - Production Ready
-- [ ] Colaboração em tempo real
-- [ ] Integração com calendário
-- [ ] PWA (App mobile)
-- [ ] App nativo (Electron)
-
----
-
-## Status de Implementação
-
-### ✅ Completo (Fase 1-3)
-
-- [x] Estrutura do projeto
-- [x] Modelos de dados
-- [x] Services de persistência
-- [x] Controllers
-- [x] Componentes React
-- [x] Validações
-- [x] Localização pt-BR
-- [x] Build otimizado
-- [x] Deployment setup
-- [x] Documentação básica
-
-### 🔄 Em Progresso
-
-- [ ] Testes unitários (TaskService, TaskModel)
-- [ ] Testes E2E (fluxo completo)
-- [ ] Documentação de API
-- [ ] Documentação de desenvolvimento
-
-### ⏳ Planejado
-
-- [ ] Sistema de lembretes
-- [ ] Features avançadas
-- [ ] Backend
-- [ ] Autenticação
-- [ ] Mobile
-
 ---
 
 ## Notas de Versão
 
 ### 0.1.0
 
-**Objetivo:** Criar versão 1 totalmente funcional com gerenciamento básico de tarefas.
+**Objetivo:** Versão 1 totalmente funcional com gerenciamento de tarefas, persistência local e deploy automatizado.
 
 **Destaques:**
 - ✨ Interface completamente funcional
 - 🎨 Design responsivo e moderno
-- 📝 100% em português
-- 🚀 Pronto para deploy
-- 📊 Build muito pequeno (50 KB gzip)
+- 📝 100% em português brasileiro
+- 🚀 Deploy automatizado em GitHub Pages e Vercel
+- 📊 Build otimizado (~50 KB gzipped)
 
-**Limitações Conhecidas:**
-- Sem sincronização entre dispositivos
-- Dados perdidos se limpar cache do navegador
-- Sem suporte para lembretes
-- Sem autenticação
-
-**Próximos Passos:**
-1. Adicionar sistema de lembretes (0.2.0)
-2. Backend e autenticação (0.4.0)
-3. PWA e Mobile app (1.0.0)
+**Características:**
+- Armazenamento local no navegador (localStorage) — sem dependência de backend
+- Funciona totalmente offline após o primeiro carregamento
+- Build pequeno e rápido (Vite + React + TypeScript)
 
 ---
 

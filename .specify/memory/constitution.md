@@ -1,140 +1,177 @@
-<!-- 
-SYNC IMPACT REPORT
-==================
-Version Change: 1.1.0 → 1.2.0 (MINOR: Portuguese-Brazilian language requirement added)
-Modified Principles: None
-Added Sections: Localization (Portuguese-Brazilian mandate)
-Removed Sections: None
-Templates Updated: spec-template.md, plan-template.md (localization context)
-Follow-up TODOs: None
+<!--
+RELATÓRIO DE IMPACTO DE SINCRONIZAÇÃO
+=====================================
+Mudança de versão: 1.2.0 → 2.0.0 (MAJOR: reescrita completa em pt-BR; remoção dos 5 princípios padrão do speckit; substituição por documentação real da stack e arquitetura efetivamente implementadas)
+Princípios modificados: Removidos os 5 princípios padrão (Documentation-First, Clean Code, Deployment, Version Control, Documentation MKDOCS). Substituídos por princípios alinhados ao que o projeto realmente entrega.
+Seções adicionadas: Stack Tecnológica detalhada; Arquitetura efetivamente implementada; Idioma do projeto (pt-BR mandatório).
+Seções removidas: Core Principles (versão genérica speckit), Quality Gates genéricos.
+Idioma do documento: agora 100% em português brasileiro.
+Templates atualizados: spec-template.md e plan-template.md continuam orientando contexto pt-BR.
+TODOs de acompanhamento: nenhum.
 -->
 
-# TODO List Constitution
+# Constituição do Projeto TODO List
 
-Project: TODO List with SDD Methodology  
-Purpose: A comprehensive TODO List application built with Software Design Documents methodology
+**Projeto:** TODO List com Metodologia SDD
+**Propósito:** Aplicação web de gerenciamento de tarefas construída sobre a metodologia de Documentos de Design de Software (Software Design Documents), com foco em código limpo, arquitetura clara em camadas e experiência 100% em português brasileiro.
 
-## Core Principles
+Este documento define o que o projeto **é** hoje — sua stack, sua arquitetura, seu idioma e as práticas que sustentam essas decisões. Qualquer divergência entre o código e este documento deve ser tratada como defeito e corrigida (no código ou na constituição, conforme o caso).
 
-### I. Documentation-First
+---
 
-All features and decisions must be documented before or concurrent with implementation.  
-- Every feature requires updated README, API documentation, and usage examples
-- Code comments explain the "why" not the "what"
-- Documentation must be reviewed and approved as part of PR review
-- Outdated documentation is treated as a critical defect
+## 1. Idioma do Projeto (pt-BR)
 
-### II. Clean Code
+O projeto inteiro é, e deve permanecer, em **português brasileiro**. Esta é a decisão de produto mais fundamental — todas as demais escolhas (mensagens de erro, nomes de variáveis voltadas ao domínio, validações, datas) derivam dela.
 
-Code quality and maintainability are non-negotiable requirements.
-- Follow language-specific style guides and naming conventions
-- Linting and code formatting enforced via CI/CD pipeline
-- DRY (Don't Repeat Yourself) principle applied consistently
-- Code reviews focus on clarity, testability, and maintainability
-- Cyclomatic complexity kept reasonable; refactor when necessary
+- **Interface (UI):** todo texto visível ao usuário — rótulos, botões, placeholders, títulos, mensagens de feedback — em pt-BR.
+- **Mensagens de validação e erro:** centralizadas em `src/constants/messages.ts`, sempre em pt-BR e com tom consistente (afirmativo, direto, sem jargão técnico).
+- **Documentação:** README, MkDocs, comentários relevantes de código e mensagens de commit em pt-BR.
+- **Formatação locale-aware:** datas, horas e números formatados com locale `pt-BR` via `Intl` (já encapsulado em `src/utils/dateUtils.ts`).
+- **Codificação:** UTF-8 em todos os arquivos para garantir suporte correto a acentuação e caracteres especiais.
+- **Sem fallback para inglês em produção:** se uma string nova for adicionada, deve nascer em pt-BR. Não há camada de i18n — o idioma do código de domínio é o próprio pt-BR.
 
-### III. Deployment
+---
 
-Production readiness and continuous deployment are core requirements.
-- All code in main branch must be deployable to production
-- Deployment to free server (e.g., Vercel, Railway, Heroku free tier) is automated
-- Deployment failures block PR merges until resolved
-- Rollback procedures documented and tested
-- Zero-downtime deployments preferred
+## 2. Stack Tecnológica
 
-### IV. Version Control
+A stack foi escolhida para entregar uma aplicação **standalone, sem backend**, com build pequeno e deploy gratuito. Cada decisão é explicada abaixo.
 
-Git workflow and commit discipline ensure clear project history.
-- Feature branches follow naming convention: `feature/#<issue>-<description>`
-- Commit messages are descriptive: imperative mood, <50 char subject + body if needed
-- Squash commits before merge to keep history clean
-- PRs require at least one approval before merge
-- Protected main branch: no direct pushes, CI must pass
+### Frontend
+- **React 18.2** — biblioteca de UI baseada em componentes. Escolhida pela maturidade, ecossistema e adequação ao padrão MVC client-side adotado.
+- **TypeScript 5.3 (strict mode)** — tipagem estática para prevenir bugs em tempo de compilação. O modo estrito é obrigatório: sem `any` implícito, sem propriedades opcionais não-checadas.
+- **CSS moderno (sem framework)** — estilos próprios por componente (`*.css` ao lado do `.tsx`), responsivos por *media queries*. A opção por CSS puro mantém o bundle pequeno e evita acoplamento a um framework de design.
 
-### V. Documentation (MKDOCS)
+### Build e Tooling
+- **Vite 5.0** — bundler de desenvolvimento e produção. Substitui Webpack pela rapidez do *dev server* (HMR instantâneo) e pelo build otimizado (~50 KB gzipped).
+- **ESLint** — análise estática de código; configuração com regras para React e TypeScript.
+- **Prettier** — formatação automática; configuração em `prettier.config.js`.
 
-User-facing and developer documentation centralized in MKDOCS.
-- MKDOCS serves as the single source of truth for project docs
-- Documentation covers: installation, usage, API reference, contribution guide
-- Docs built and deployed automatically with each main branch update
-- Every major feature gets a dedicated doc page
-- Keep docs in sync with code; outdated docs must be updated or removed
+### Testes
+- **Vitest 1.1** — testes unitários e de integração, com API compatível com Jest e integração nativa com Vite.
+- **Playwright 1.40** — testes E2E executando em navegadores reais.
+- Estrutura em três camadas: `tests/unit/`, `tests/integration/`, `tests/e2e/`.
 
-## Technology Stack & Deployment
+### Persistência
+- **localStorage do navegador** — armazenamento por origem, abstraído em `src/services/StorageService.ts`. Não há backend, banco de dados ou API remota. Toda a persistência vive no cliente, prefixada por `todo-list-`.
 
-- **Language/Framework**: Select based on project requirements
-- **Documentation**: MKDOCS for user and developer documentation
-- **Hosting**: Free tier server (Vercel, Railway, Heroku, etc.)
-- **CI/CD**: GitHub Actions (or equivalent) for automated testing, linting, and deployment
-- **Version Control**: Git with GitHub
+### Deploy e CI/CD
+- **GitHub Pages** e **Vercel** — ambas plataformas suportadas; configuração em `vercel.json` e workflow em `.github/workflows/deploy.yml`.
+- **GitHub Actions** — pipelines para testes (`test.yml`), deploy da aplicação (`deploy.yml`) e deploy da documentação (`docs.yml`).
+- **MkDocs (Material theme)** — documentação técnica em `docs/`, publicada automaticamente.
 
-## Architecture
+### Versionamento
+- **Git + GitHub** — repositório único (mono-repo), branch principal `master`, branches de feature seguindo o padrão `feature/<descricao>` ou `feature/#<issue>-<descricao>`.
 
-**Pattern**: MVC (Model-View-Controller) - mandatory architectural pattern
-- **Models**: Encapsulate data structures and business logic; must be independent of UI
-- **Views**: Presentation layer responsible for rendering UI; must not contain business logic
-- **Controllers**: Handle user input and orchestrate between Models and Views; thin request/response handlers
+---
 
-**Repository Structure**: Mono-repo (single repository, organized by logical boundaries)
-- Single Git repository for all components
-- Organized by feature/module directories under `src/`
-- Shared utilities/libraries in `lib/` directory
-- Clear separation of concerns via directory structure
+## 3. Arquitetura
 
-**Data Storage**: Memory-only (in-process storage, no persistent database)
-- Use in-memory data structures (arrays, maps, sets, objects)
-- Data persists only during application runtime
-- Application restart clears all data (reset to empty state)
-- No file-based database, no external database connections required
-- Suitable for MVP, demos, and testing without infrastructure dependencies
+A aplicação adota o padrão **MVC client-side** com uma camada extra de **Services** entre Controllers e Models, refletindo a estrutura real do código sob `src/`.
 
-**Deployment Model**: Stateless single-instance
-- Application is stateless; all state held in memory
-- No session management across multiple instances
-- Free tier hosting sufficient (single instance, low resource usage)
-- No need for database backups or migration tooling
+### 3.1. Camadas
 
-## Localization
+A separação em camadas é a coluna vertebral do projeto. Cada camada tem uma única responsabilidade e só conhece a camada imediatamente abaixo:
 
-**Language**: Portuguese-Brazilian (pt-BR) - mandatory requirement
-- **UI/Frontend**: All user-facing text, labels, buttons, and messages in Portuguese-Brazilian
-- **Backend**: All API responses, error messages, and validation messages in Portuguese-Brazilian
-- **Documentation**: All code comments, docstrings, and internal documentation in Portuguese-Brazilian
-- **Database/Data**: Locale-aware formatting for dates, times, numbers, and currency
-- **Git Commits**: Commit messages and PR descriptions in Portuguese-Brazilian
+**Componentes React (View) — `src/components/`**
+- Responsáveis por renderização e captura de interação do usuário.
+- Não contêm lógica de negócio nem acessam `localStorage` diretamente.
+- Recebem dados e callbacks via *props*; toda mudança de estado é orquestrada pelo container `TaskListPage`.
 
-**Implementation Requirements**:
-- Use standard pt-BR locale codes (`pt_BR`, `pt-BR`) for system configuration
-- Implement localization from the start; no English fallbacks in production
-- Use language-aware string formatting for pluralization and gender agreements
-- All user input validation messages in Portuguese-Brazilian
-- Support for Brazilian Portuguese character encoding (UTF-8)
+**Controllers — `src/controllers/`**
+- Camada fina que orquestra entre View e Services.
+- Recebem ações do usuário (criar, marcar como concluída, deletar) e delegam aos services apropriados.
+- Não armazenam estado próprio.
 
-## Development Workflow
+**Services — `src/services/`**
+- Implementam as regras de negócio: `TaskService`, `ReminderService`, `StorageService`, `NotificationService`, `ValidationService`, `DateService`.
+- Toda persistência passa por `StorageService`; toda validação por `ValidationService`.
+- Services não conhecem React — são puramente TypeScript e testáveis em isolamento.
 
-1. **Issue Creation**: All work starts with a GitHub issue describing the feature/bug
-2. **Feature Branch**: Create a feature branch from issue; keep PRs focused and atomic
-3. **Development**: Write code following clean code principles; update docs concurrently
-4. **Testing**: All new code must have passing tests; aim for >80% coverage
-5. **Documentation**: Update README, API docs, and MKDOCS pages before PR review
-6. **Pull Request**: Create PR with clear title and description; address review comments
-7. **Merge & Deploy**: After approval, PR is merged to main; automatic deployment to production
+**Models — `src/models/`**
+- Encapsulam entidades de domínio (`Task`, `Reminder`) e suas validações.
+- Definem a forma canônica dos dados que circulam entre as camadas.
 
-## Quality Gates
+**Tipos — `src/types/`**
+- Interfaces TypeScript que descrevem contratos entre camadas. São o "esqueleto" do domínio.
 
-- ✅ All CI checks must pass (tests, linting, build)
-- ✅ At least one code review approval required
-- ✅ Documentation updated and reviewed
-- ✅ No merge conflicts or failed deployments
-- ✅ Changelog updated for user-facing changes
+**Constantes — `src/constants/`**
+- `messages.ts`: todas as strings em pt-BR exibidas ao usuário.
+- `config.ts`: configurações da aplicação (prefixos de storage, limites, etc.).
 
-## Governance
+**Utilitários — `src/utils/`**
+- Funções puras de apoio: `dateUtils.ts` (formatação pt-BR de datas), `stringUtils.ts` (sanitização contra XSS).
 
-**Constitution Authority**: This constitution supersedes all other practices and guidelines.  
-**Compliance**: All contributors must adhere to these principles in their work.  
-**Amendment Process**: Proposed amendments must be documented in a new issue with rationale; consensus required from maintainers before adoption.  
-**Versioning Policy**: MAJOR.MINOR.PATCH (semantic versioning); MAJOR changes reserved for breaking architecture decisions.  
-**Review Cycle**: Constitution reviewed quarterly or when significant drift from principles is observed.  
-**Runtime Guidance**: Developers should consult `docs/CONTRIBUTING.md` for detailed implementation instructions and day-to-day practices.
+### 3.2. Estrutura do Repositório (mono-repo)
 
-**Version**: 1.2.0 | **Ratified**: 2026-05-10 | **Last Amended**: 2026-05-10
+```
+todo-list-sdd/
+├── src/                  # Código-fonte da aplicação
+│   ├── components/       # View (React)
+│   ├── controllers/      # Orquestração
+│   ├── services/         # Regras de negócio
+│   ├── models/           # Entidades
+│   ├── types/            # Contratos TS
+│   ├── constants/        # Mensagens pt-BR e config
+│   └── utils/            # Utilitários puros
+├── tests/                # Unit, integration, e2e
+├── docs/                 # Documentação MkDocs
+├── specs/                # Especificações SDD
+├── .specify/             # Templates e constituição
+└── .github/workflows/    # CI/CD
+```
+
+### 3.3. Fluxo de Dados
+
+O fluxo é unidirecional: a View dispara uma ação → Controller orquestra → Service aplica regra → Model valida → Storage persiste → callback re-renderiza a View. Isso elimina ambiguidade sobre "onde algo acontece" e torna cada camada testável isoladamente. Os diagramas detalhados de fluxo estão em `docs/documentation/architecture.md`.
+
+### 3.4. Segurança no Cliente
+
+- **Prevenção de XSS:** toda string vinda do usuário passa por sanitização em `stringUtils.ts` antes de ser persistida.
+- **Validação de tipos:** TypeScript em modo estrito + validações explícitas nos Models.
+- **Sem dados sensíveis:** `localStorage` não é criptografado; a aplicação não armazena senhas, tokens ou informações pessoais identificáveis.
+
+---
+
+## 4. Práticas de Desenvolvimento
+
+As práticas abaixo decorrem das três seções anteriores e existem para preservá-las.
+
+### 4.1. Código limpo e revisão
+- Nomes de identificadores em português quando representam conceitos de domínio (ex.: `criarTarefa`, `tituloTarefa`); nomes em inglês são aceitáveis para conceitos técnicos genéricos (ex.: `id`, `callback`).
+- Funções pequenas e focadas; uma função, uma responsabilidade.
+- DRY aplicado com bom-senso — duplicação rasa é melhor que abstração prematura.
+- Toda PR passa por revisão antes de merge.
+
+### 4.2. Testes
+- Cobertura-alvo: >80% nos services e models (camadas com lógica).
+- Componentes triviais não precisam de teste unitário; cobertos por E2E.
+- Testes E2E cobrem os fluxos críticos de usuário.
+
+### 4.3. Versionamento e CI
+- `master` é a branch protegida; não há push direto.
+- CI obrigatório: lint, build e testes precisam passar antes de merge.
+- Mensagens de commit em pt-BR, no imperativo (`adiciona`, `corrige`, `atualiza`).
+
+### 4.4. Documentação
+- MkDocs em `docs/` é a fonte única para documentação técnica externa.
+- README é o ponto de entrada; quickstart em `docs/quickstart.md`.
+- Documentação é atualizada **junto** com o código que ela descreve, na mesma PR.
+
+---
+
+## 5. Governança
+
+**Autoridade da Constituição:** este documento prevalece sobre práticas individuais ou orientações pontuais. Conflitos são resolvidos lendo este texto.
+
+**Processo de alteração:** mudanças significativas (uma das três primeiras seções) exigem PR dedicada com justificativa. Atualizações de detalhes operacionais (seção 4) podem ser feitas livremente.
+
+**Versionamento:** segue SemVer.
+- **MAJOR:** mudança incompatível em stack, arquitetura ou idioma.
+- **MINOR:** acréscimo de princípio ou seção.
+- **PATCH:** ajustes textuais, exemplos, esclarecimentos.
+
+**Revisão:** sempre que a arquitetura ou stack reais divergirem do que está aqui escrito.
+
+---
+
+**Versão:** 2.0.0 | **Ratificada em:** 2026-05-17 | **Última alteração:** 2026-05-17

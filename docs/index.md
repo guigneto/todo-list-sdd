@@ -50,34 +50,30 @@ git push origin main
 
 Aplicação desenvolvida com **padrão MVC** em React + TypeScript:
 
+```mermaid
+flowchart TD
+    V["<b>React Components (View)</b>"]
+    C["<b>Controllers (Orquestração)</b>"]
+    S["<b>Services (Lógica de Negócio)</b>"]
+    M["<b>Models (Entidades)</b>"]
+    DB[("<b>localStorage (Persistência)</b>")]
+
+    V --> C --> S --> M --> DB
+
+    classDef view fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+    classDef ctrl fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef svc fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef model fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843;
+    classDef storage fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#312e81;
+
+    class V view;
+    class C ctrl;
+    class S svc;
+    class M model;
+    class DB storage;
 ```
-┌─────────────────────────────────────┐
-│         React Components (View)      │
-├─────────────────────────────────────┤
-│     Controllers (Orquestração)      │
-├─────────────────────────────────────┤
-│   Services (Lógica de Negócio)     │
-├─────────────────────────────────────┤
-│      Models (Entidades)             │
-├─────────────────────────────────────┤
-│    localStorage (Persistência)      │
-└─────────────────────────────────────┘
-```
 
-## 📊 Status do Projeto
-
-**Progresso Geral:** 25/88 tarefas completadas (25%)
-
-| Fase | Descrição | Status |
-|------|-----------|--------|
-| 1 | Setup e Configuração | ✅ Completa (8/8) |
-| 2 | Fundações | ✅ Completa (14/14) |
-| 3 | User Story 1: Deletar Tarefas | ⏳ Em Progresso (23/30) |
-| 4 | User Story 2: Lembretes | ⏳ Pendente |
-| 5 | User Story 3: Workflow Completo | ⏳ Pendente |
-| 6 | Polish da UI | ⏳ Pendente |
-| 7 | Docs & CI/CD | ⏳ Pendente |
-| 8 | QA | ⏳ Pendente |
+Detalhes completos em [📖 Arquitetura](documentation/architecture.md).
 
 ## 🛠️ Stack Tecnológico
 
@@ -90,24 +86,25 @@ Aplicação desenvolvida com **padrão MVC** em React + TypeScript:
 
 ## 📱 Funcionalidades
 
-### Fase 1 ✅ - Setup e Configuração
-- Estrutura do projeto
-- Configuração TypeScript/Vite
+### Gerenciamento de Tarefas
+- Criar tarefas com título e descrição
+- Listar todas as tarefas
+- Marcar como concluída/pendente
+- Deletar com confirmação
+- Filtrar por status (todas, pendentes, concluídas)
+
+### Infraestrutura e Qualidade
+- Estrutura modular em camadas (MVC + Services)
+- TypeScript em modo estrito
+- Testes unitários (Vitest) e E2E (Playwright)
 - CI/CD com GitHub Actions
-- Deploy preparado
+- Deploy automatizado (GitHub Pages e Vercel)
 
-### Fase 2 ✅ - Fundações
+### Fundações Técnicas
 - Modelos de dados (Task, Reminder)
-- Serviços de persistência
-- Validações
-- Utilitários de data
-
-### Fase 3 🔄 - Deletar Tarefas (Em Andamento)
-- ✅ Criar tarefas
-- ✅ Listar tarefas
-- ✅ Marcar como concluída/pendente
-- 🔄 Deletar com confirmação
-- 🔄 Interface completa
+- Serviços de persistência (localStorage)
+- Validações e sanitização (prevenção de XSS)
+- Utilitários de data com locale pt-BR
 
 ## 🔗 Links Úteis
 

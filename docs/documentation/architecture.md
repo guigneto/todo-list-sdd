@@ -4,37 +4,32 @@ Visão geral da arquitetura da aplicação TODO List.
 
 ## 📐 Padrão MVC
 
-A aplicação segue o padrão **Model-View-Controller**:
+A aplicação segue o padrão **Model-View-Controller** com uma camada extra de Services entre Controllers e Models:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│              React Components (View)                      │
-│  - TaskListPage, TaskItem, TaskForm, TaskList, etc      │
-│  - Responsável por renderização e interação do usuário  │
-└──────────────────────────┬──────────────────────────────┘
-                           │ (chamam)
-┌──────────────────────────▼──────────────────────────────┐
-│           Controllers (Orquestração)                     │
-│  - TaskController, ReminderController                   │
-│  - Coordenam operações entre View e Services            │
-└──────────────────────────┬──────────────────────────────┘
-                           │ (utilizam)
-┌──────────────────────────▼──────────────────────────────┐
-│         Services (Lógica de Negócio)                     │
-│  - TaskService, ReminderService, StorageService, etc   │
-│  - Implementam regras de negócio e persistência         │
-└──────────────────────────┬──────────────────────────────┘
-                           │ (utilizam)
-┌──────────────────────────▼──────────────────────────────┐
-│          Models (Entidades)                              │
-│  - TaskModel, ReminderModel                             │
-│  - Encapsulam dados e validações                        │
-└──────────────────────────┬──────────────────────────────┘
-                           │ (persistem)
-┌──────────────────────────▼──────────────────────────────┐
-│       localStorage (Persistência)                        │
-│  - Armazenamento em memória do navegador                │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    V["<b>React Components (View)</b><br/>TaskListPage · TaskItem · TaskForm · TaskList<br/><i>Renderização e interação do usuário</i>"]
+    C["<b>Controllers (Orquestração)</b><br/>TaskController · ReminderController<br/><i>Coordenam View ↔ Services</i>"]
+    S["<b>Services (Lógica de Negócio)</b><br/>TaskService · ReminderService · StorageService · NotificationService<br/><i>Regras de negócio e persistência</i>"]
+    M["<b>Models (Entidades)</b><br/>TaskModel · ReminderModel<br/><i>Dados e validações</i>"]
+    DB[("<b>localStorage</b><br/><i>Persistência no navegador</i>")]
+
+    V -- chamam --> C
+    C -- utilizam --> S
+    S -- utilizam --> M
+    M -- persistem --> DB
+
+    classDef view fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+    classDef ctrl fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
+    classDef svc fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d;
+    classDef model fill:#fce7f3,stroke:#db2777,stroke-width:2px,color:#831843;
+    classDef storage fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#312e81;
+
+    class V view;
+    class C ctrl;
+    class S svc;
+    class M model;
+    class DB storage;
 ```
 
 ## 📁 Estrutura de Diretórios
@@ -115,73 +110,75 @@ todo-list-sdd/
 
 ### Criação de Tarefa
 
-```
-User Input (TaskForm)
-        ↓
-    onChange event
-        ↓
-TaskListPage (state)
-        ↓
-handleCreateTask()
-        ↓
-TaskController.criarTarefa()
-        ↓
-TaskService.criarTarefa()
-        ↓
-TaskModel.validar() ✓
-        ↓
-StorageService.set() → localStorage
-        ↓
-NotificationService.notify() (Toast)
-        ↓
-callback onTasksChanged
-        ↓
-TaskListPage.setTasks() (re-render)
-        ↓
-TaskList atualiza UI
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Usuário
+    participant F as TaskForm
+    participant P as TaskListPage
+    participant C as TaskController
+    participant S as TaskService
+    participant M as TaskModel
+    participant ST as StorageService
+    participant N as NotificationService
+
+    U->>F: Preenche título e descrição
+    F->>P: onChange / submit
+    P->>C: criarTarefa(dados)
+    C->>S: criarTarefa(dados)
+    S->>M: validar()
+    M-->>S: ok
+    S->>ST: set(tarefas) → localStorage
+    S->>N: notify("Tarefa criada")
+    S-->>P: onTasksChanged
+    P-->>F: setTasks() (re-render)
+    F-->>U: Lista atualizada
 ```
 
 ### Deleção de Tarefa
 
-```
-User Click (delete button)
-        ↓
-TaskItem.onDelete()
-        ↓
-TaskListPage (setSelectedTaskForDelete)
-        ↓
-DeleteConfirmationModal.isOpen = true
-        ↓
-User Confirm Delete
-        ↓
-TaskListPage.handleConfirmDelete()
-        ↓
-TaskController.deletarTarefa()
-        ↓
-TaskService.deletarTarefa()
-        ↓
-StorageService.set() → localStorage
-        ↓
-NotificationService.notifyTaskDeleted() (Toast)
-        ↓
-callback onTasksChanged
-        ↓
-TaskListPage.setTasks() (re-render)
-        ↓
-Task desaparece da lista UI
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Usuário
+    participant I as TaskItem
+    participant P as TaskListPage
+    participant Mo as DeleteConfirmationModal
+    participant C as TaskController
+    participant S as TaskService
+    participant ST as StorageService
+    participant N as NotificationService
+
+    U->>I: Clica no ícone de deletar
+    I->>P: onDelete(task)
+    P->>Mo: abre modal de confirmação
+    U->>Mo: Confirmar deleção
+    Mo->>P: handleConfirmDelete()
+    P->>C: deletarTarefa(id)
+    C->>S: deletarTarefa(id)
+    S->>ST: set(tarefas) → localStorage
+    S->>N: notifyTaskDeleted()
+    S-->>P: onTasksChanged
+    P-->>U: Tarefa desaparece da lista
 ```
 
 ## 🔌 Integração de Componentes
 
 ### TaskListPage (Container Principal)
 
-```typescript
-<TaskListPage>
-  ├── TaskForm          // Entrada de dados
-  ├── TaskList          // Renderização da lista
-  │   └── TaskItem[] // Items individuais
-  ├── DeleteConfirmationModal  // Confirmação de deleção
-  └── Toast             // Notificações
+```mermaid
+flowchart TD
+    P[TaskListPage]
+    P --> F[TaskForm<br/><i>Entrada de dados</i>]
+    P --> L[TaskList<br/><i>Renderização da lista</i>]
+    L --> I[TaskItem<br/><i>Item individual</i>]
+    P --> D[DeleteConfirmationModal<br/><i>Confirmação de deleção</i>]
+    P --> T[Toast<br/><i>Notificações</i>]
+
+    classDef container fill:#dbeafe,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+    classDef child fill:#f1f5f9,stroke:#475569,stroke-width:1.5px,color:#0f172a;
+    class P container;
+    class F,L,I,D,T child;
 ```
 
 ## 💾 Persistência
@@ -249,4 +246,4 @@ Task desaparece da lista UI
 
 ---
 
-Para mais detalhes, consulte a [🔧 Estrutura do Projeto](development/project-structure.md).
+Para mais detalhes, consulte a [🔧 Estrutura do Projeto](../development/project-structure.md).

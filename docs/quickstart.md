@@ -72,17 +72,6 @@ Todos os seus dados são automaticamente salvos no **localStorage** do seu naveg
 ❌ Limpar cookies/cache do navegador apaga os dados  
 ❌ Dados não sincronizam entre dispositivos  
 
-## 🔄 Atualizações Disponíveis
-
-Em breve estarão disponíveis:
-
-- 📅 **Sistema de Lembretes** - Configure notificações para tarefas
-- 🏷️ **Categorias/Tags** - Organize suas tarefas por categoria
-- 🔍 **Busca Avançada** - Procure tarefas por conteúdo
-- 📊 **Estatísticas** - Veja seu progresso em gráficos
-- 🌙 **Modo Escuro** - Interface em tema escuro
-- 📲 **App Mobile** - Versão PWA para celular
-
 ## 🐛 Troubleshooting
 
 ### "Port 3000 já está em uso"
@@ -111,7 +100,7 @@ Limpe o cache do navegador e recarregue (Ctrl+Shift+Delete).
 - Leia a [📖 Documentação Completa](documentation/architecture.md)
 - Configure [🚀 Deployment no GitHub Pages](deployment/github-pages.md)
 - Explore o [🔧 Setup de Desenvolvimento](development/setup.md)
-- Contribua consultando [CONTRIBUTING](development/contributing.md)
+- Contribua consultando o [🔧 Setup de Desenvolvimento](development/setup.md)
 
 ## ❓ Dúvidas?
 
